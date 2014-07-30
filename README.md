@@ -1,0 +1,4 @@
+MyServer
+========
+
+Struts+JPA+Spring 
