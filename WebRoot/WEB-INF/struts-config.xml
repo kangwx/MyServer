@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+<struts-config>
+	<form-beans>
+		<form-bean name="userForm" type="cn.kang.web.formbean.UserForm"></form-bean>
+		<form-bean name="cuisineForm" type="cn.kang.web.formbean.CuisineForm"></form-bean>
+		<form-bean name="institutionForm" type="cn.kang.web.formbean.InstitutionForm"></form-bean>
+		<form-bean name="employeeForm" type="cn.kang.web.formbean.privilege.EmployeeForm"/>
+		<form-bean name="privilegeGroupForm" type="cn.kang.web.formbean.privilege.PrivilegeGroupForm"/>
+		<form-bean name="departmentForm" type="cn.kang.web.formbean.privilege.DepartmentForm"/>
+		<form-bean name="uploadfileform" type="cn.kang.web.formbean.uploadfile.UploadfileForm"/>
+		
+	</form-beans>
+	<global-forwards>
+		<forward name="message" path="/WEB-INF/page/share/message.jsp" />
+		<forward name="directUrl" path="/WEB-INF/page/share/directUrl.jsp"/>
+	</global-forwards>
+	<action-mappings>
+		<!-- 系统初始化 -->
+		<action path="/system/init"/>
+		<!-- 控制台主页 -->
+		<action path="/control/center/main" forward="/WEB-INF/page/controlcenter/default.jsp"/>
+		<action path="/control/center/top" forward="/WEB-INF/page/controlcenter/top.jsp"/>
+		<action path="/control/center/left" forward="/WEB-INF/page/controlcenter/menu.jsp"/>
+		<action path="/control/center/right" forward="/WEB-INF/page/controlcenter/right.jsp"/>
+		<action path="/control/center/end" forward="/WEB-INF/page/controlcenter/end.jsp"/>
+		<!-- 网站用户列表显示 -->
+		<action path="/control/user/list" name="userForm" scope="request" validate="false">
+			<forward name="list" path="/WEB-INF/page/user/userlist.jsp"/>
+		</action>
+		<!-- 网站用户管理 -->
+		<action path="/control/user/manage" name="userForm" scope="request" validate="false" parameter="method">
+		</action>
+		<action path="/control/user/query" forward="/WEB-INF/page/user/query.jsp"/>
+		
+		<!-- 网站用户注册 -->
+		<action path="/user/reg" name="userForm" scope="request" parameter="method">
+			<forward name="regUI" path="/WEB-INF/page/user/userReg.jsp"/>
+			<forward name="regFinish" path="/WEB-INF/page/user/regFinish.jsp"/>
+			<forward name="checkuser" path="/WEB-INF/page/user/checkuser.jsp"/>
+		</action>
+		
+		<!-- 网站用户登录 -->
+		<action path="/user/logon" name="userForm" scope="request" validate="false">
+			<forward name="logon" path="/WEB-INF/page/user/logon.jsp"/>
+		</action>
+		<!-- 上传文件管理 -->
+		<action path="/control/uploadfile/manage" name="uploadfileform" scope="request" parameter="method">
+			<forward name="upload" path="/WEB-INF/page/uploadfile/upload.jsp"/>
+			<forward name="uploadfinish" path="/WEB-INF/page/uploadfile/fileuploadfinish.jsp"/>
+			<forward name="error" path="/WEB-INF/page/uploadfile/error.jsp"/>
+		</action>
+		<!-- 上传文件分页显示 -->
+		<action path="/control/uploadfile/list" name="uploadfileform" scope="request">
+			<forward name="list" path="/WEB-INF/page/uploadfile/uploadfilelist.jsp"/>
+		</action>
+						
+		<!-- 部门列表 -->
+		<action path="/control/department/list" name="departmentForm" scope="request" validate="false">
+			<forward name="list" path="/WEB-INF/page/department/departmentlist.jsp"/>
+		</action>					
+		<!-- 部门管理 -->
+		<action path="/control/department/manage" name="departmentForm" scope="request" validate="false" parameter="method">
+			<forward name="add" path="/WEB-INF/page/department/adddepartment.jsp"/>
+			<forward name="edit" path="/WEB-INF/page/department/editdepartment.jsp"/>
+		</action>		
+		<!-- 员工列表 -->
+		<action path="/control/employee/list" name="employeeForm" scope="request" validate="false">
+			<forward name="list" path="/WEB-INF/page/department/employeelist.jsp"/>
+		</action>			
+		<action path="/control/employee/manage" name="employeeForm" scope="request" validate="false" parameter="method">
+			<forward name="add"  path="/WEB-INF/page/department/addemployee.jsp"/>
+			<forward name="checkResult"  path="/WEB-INF/page/department/usernameIsExsit.jsp"/>
+			<forward name="edit"  path="/WEB-INF/page/department/editemployee.jsp"/>
+			<forward name="query" path="/WEB-INF/page/department/query.jsp"/>
+		</action>	
+		
+		<!-- 员工登录 -->
+		<action path="/employee/logon" name="employeeForm" scope="request" validate="false">
+			<forward name="main" path="/control/center/main.do" redirect="true"/>
+			<forward name="logon" path="/WEB-INF/page/department/logon.jsp"/>
+		</action>					
+		<!-- 员工退出登录 -->
+		<action path="/employee/logout" name="employeeForm" scope="request" validate="false">
+			<forward name="logon" path="/employee/logon.do" redirect="true"/>
+		</action>	
+		
+		<!-- 权限组列表 -->
+		<action path="/control/privilegegroup/list" name="privilegeGroupForm" scope="request" validate="false">
+			<forward name="list" path="/WEB-INF/page/department/privilegegrouplist.jsp"/>
+		</action>
+		<!-- 权限组管理 -->				
+		<action path="/control/privilegegroup/manage" name="privilegeGroupForm" scope="request" validate="false" parameter="method">
+			<forward name="add"  path="/WEB-INF/page/department/addprivilegegroup.jsp"/>
+			<forward name="edit"  path="/WEB-INF/page/department/editprivilegegroup.jsp"/>
+		</action>					
+				
+		
+		<action path="/cuisine/show" name="cuisineForm" scope="request" parameter="method">
+			<forward name="result" path="/WEB-INF/page/result.jsp"></forward>
+		</action>
+		<action path="/institution/showList" name="institutionForm" scope="request" parameter="method">
+			<forward name="result" path="/WEB-INF/page/result.jsp"></forward>
+		</action>
+	</action-mappings>
+
+
+ <controller>
+	    <set-property property="processorClass" value="org.springframework.web.struts.DelegatingRequestProcessor"/>
+	</controller>
+</struts-config>
